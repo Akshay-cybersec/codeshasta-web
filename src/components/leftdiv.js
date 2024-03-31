@@ -20,7 +20,7 @@ function Leftdiv() {
         <div className="leftdiv">
             <div className="logopart">
                 <img src={logo} className="logoimg" />
-                <h1 style={{ color: Color.maincol, paddingLeft: 10}}>Udemy</h1>
+                <h1 style={{ color: Color.maincol, paddingLeft: 10}}>SkillZone</h1>
             </div>
             <div className="navitem">
                 <Link
@@ -33,13 +33,13 @@ function Leftdiv() {
                     <span className="iteminnerstyle">Home</span>
                 </Link>
                 <Link
-                    to="/explore"
+                    to="/transaction"
                     className={`navitemsingle ${activeItem === "explore" ? "active" : ""
                         }`}
                     onClick={() => handleItemClick("explore")}
                 >
                     <img className="innerimg" src={explore} />
-                    <span className="iteminnerstyle">Explore</span>
+                    <span className="iteminnerstyle">Transaction</span>
                 </Link>
                 <Link
                     to="/managecourse"
@@ -73,6 +73,14 @@ function Leftdiv() {
                 >
                     <BsFillPersonFill className="innerimg" color="grey"/>
                     <span className="iteminnerstyle">Profile Setting</span>
+                </Link>
+                <Link
+                    to="/wallet"
+                    className={`navitemsingle ${activeItem === "add" ? "active" : ""}`}
+                    onClick={() => handleItemClick("add")}
+                >
+                    <BsFillPersonFill className="innerimg" color="grey"/>
+                    <span className="iteminnerstyle">Wallet</span>
                 </Link>
             </div>
         </div>
