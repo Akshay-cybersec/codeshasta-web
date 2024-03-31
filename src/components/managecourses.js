@@ -11,7 +11,10 @@ import courseimg from '../resources/course.png';
 import { SearchBar } from '@cred/neopop-web/lib/components';
 import { colorGuide } from '@cred/neopop-web/lib/primitives';
 import { BsBell } from "react-icons/bs";
-import bgimg from "../resources/bg.jpeg"
+import cryptoimg from "../resources/cryptocurrency-main.jpg"
+import blockchain from "../resources/blockchain.jpg"
+import django from "../resources/django.jpg"
+
 
 const CardContentWrapper = styled('div')({
     display: 'flex',
@@ -39,22 +42,25 @@ function Managecourses() {
             {
                 title: "Crypto Currency",
                 description: "Description for crypto",
-                amount: "₹10000"
+                amount: "₹10000",
+                img:cryptoimg
             },
             {
                 title: "Blockchain",
                 description: "Description for blockchain",
-                amount: "₹20000"
+                amount: "₹20000",
+                img:blockchain
             },
             {
                 title: "Django",
                 description: "Description for Django",
-                amount: "₹5000"
+                amount: "₹5000",
+                img:django
             }
         ];
 
         // Merge dummy data with existing course data
-        setCourseData(prevData => [...prevData, ...dummyData]);
+        setCourseData(prevData => [ ...dummyData,...prevData]);
     }, []);
 
     return (
@@ -73,7 +79,7 @@ function Managecourses() {
                 {courseData.map((data, index) => (
                     <Card key={index} elevation={4} style={{ width: '350px', padding: '16px', margin: '16px' }}>
                         {/* Image */}
-                        <img src={courseimg} alt="Product" style={{ width: '100%', height: 'auto' }} />
+                        <img src={data.img?data.img:courseimg} alt="Product" style={{ width: '100%', height: 'auto' }} />
 
                         <CardContent style={{ padding: '16px' }}>
                             <CardContentWrapper>

@@ -1,60 +1,48 @@
-import "./homestyle.css";
-import Leftdiv from "./leftdiv";
 import { useState, useRef } from "react";
-import "./course.css";
-import ProgressBar from "@ramonak/react-progress-bar";
 import { AiOutlineUpload } from "react-icons/ai";
-import { css } from "@emotion/react"; // Import css function from react-spinners
-import { ClipLoader } from "react-spinners"; // Import ClipLoader component from react-spinners
+import { ClipLoader } from "react-spinners";
 
 function Certificate() {
-    const [paidChecked, setPaidChecked] = useState(false);
-    const [unpaidChecked, setUnpaidChecked] = useState(false);
     const [thumbnail, setThumbnail] = useState(null);
-    const [videoFile, setVideoFile] = useState(null);
-    const [videoFileName, setVideoFileName] = useState("");
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-    const [isLoading, setIsLoading] = useState(false); // State to control the loading state
+    const [isLoading, setIsLoading] = useState(false);
     const thumbnailInputRef = useRef(null);
-    const videoInputRef = useRef(null);
-
-    const handlePaidChange = () => {
-        setPaidChecked(true);
-        setUnpaidChecked(false);
-    };
-
-    const handleUnpaidChange = () => {
-        setPaidChecked(false);
-        setUnpaidChecked(true);
-    };
-
-    const handleThumbnailClick = () => {
-        thumbnailInputRef.current.click();
-    };
-
-    const handleVideoUploadClick = () => {
-        videoInputRef.current.click();
-    };
 
     const handleThumbnailChange = (event) => {
         const file = event.target.files[0];
         setThumbnail(file);
     };
 
-    const handleVideoChange = (event) => {
-        const file = event.target.files[0];
-        setVideoFile(file);
-        setVideoFileName(file.name);
+    const handleThumbnailClick = () => {
+        thumbnailInputRef.current.click();
     };
 
-    const handleNextButtonClick = () => {
-        setIsLoading(true); // Set loading state to true
-        // Simulate loading for 2 seconds (replace with your actual API call or loading logic)
-        setTimeout(() => {
-            setIsLoading(false); // Set loading state to false after 2 seconds
+    const handleNextButtonClick = async () => {
+        setIsLoading(true);
+    
+        try {
+            const formData = new FormData();
+            formData.append("certificate_file", thumbnail);
+    
+            const requestOptions = {
+                method: 'POST',
+                body: formData,
+                redirect: 'follow'
+            };
+    
+            const response = await fetch("https://6a66-2401-4900-57ff-350c-dc09-e9f2-92a5-b9f9.ngrok-free.app/api/verify-certificate/", requestOptions);
+            const result = await response.json(); // Parse JSON response
+            const message = result.message; // Access the "message" property
+    
+            window.alert(`${message}\n`); // Display alert
             setShowSuccessMessage(true);
-        }, 2000);
+        } catch (error) {
+            console.error('Error uploading certificate:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
+    
 
     return (
         <div className="maindiv">
@@ -62,14 +50,14 @@ function Certificate() {
                 <p className="titlebar" style={{ fontWeight: "bold" }}>
                     Certificate Validation
                 </p>
-                <p className="childtitles">Id</p>
+                <p className="childtitles">ID</p>
                 <input className="inputfield" placeholder="Enter Your ID" />
                 <h2 style={{ paddingTop: 20 }}>Or</h2>
                 <div className="thumbnailpart">
                     <input
                         type="file"
                         id="thumbnailInput"
-                        accept="image/*"
+                        accept="image/*, .pdf"
                         style={{ display: "none" }}
                         onChange={handleThumbnailChange}
                         ref={thumbnailInputRef}
@@ -101,16 +89,16 @@ function Certificate() {
 
                 <div className="nextbtn">
                     <button className="nextbtnstyle" onClick={handleNextButtonClick}>
-                        {isLoading ? ( // Display loader if isLoading is true
+                        {isLoading ? (
                             <ClipLoader color={"#ffffff"} loading={isLoading} size={20} />
                         ) : (
-                            "Next"
+                            "Verify"
                         )}
                     </button>
                 </div>
                 {showSuccessMessage && (
                     <div className="success-message">
-                        Course uploaded successfully!
+                        Certificate uploaded successfully!
                     </div>
                 )}
             </div>

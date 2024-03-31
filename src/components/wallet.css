@@ -1,3 +1,27 @@
-.nextbtnstyle{
-    margin-top: 40px;
+.main{
+    /* background-image: url(../resources/abstracttrp.svg); */
+    background-size: cover;
+    height: 700px;
+    width: 95%;
+}
+
+.inner{
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    align-items: center;
+    margin-left: 200px;
+    transform: scale(1.2);
+    position: absolute;
+    top: 70px;
+    right: 350px;
+    padding: 40px;
+    border-radius: 30px;
+}
+
+.inner::after{
+    background-image: url("https://miro.medium.com/v2/resize:fit:486/1*L8ODr3uJlh44i1SgjlMv7w.png");
+    width: 200px;
+    height: 200px;
+    position: absolute;
 }

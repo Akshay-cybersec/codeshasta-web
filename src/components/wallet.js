@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
 import "./wallet.css";
-
+import mobileimg from '../resources/mobile-2.png'
 import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
 
 // 1. Get projectId
@@ -17,13 +17,13 @@ const mainnet = {
 }
 
 const sepolia = {
-    chainId: 11155111,
-    namespace: 'eip155:11155111',
-    name: 'Sepolia',
-    currency: 'ETH',
-    explorerUrl: 'https://sepolia.etherscan.io/',
-    rpcUrl: 'https://rpc.sepolia.org/'
-  }
+  chainId: 11155111,
+  namespace: 'eip155:11155111',
+  name: 'Sepolia',
+  currency: 'ETH',
+  explorerUrl: 'https://sepolia.etherscan.io/',
+  rpcUrl: 'https://rpc.sepolia.org/'
+}
 
 // 3. Create a metadata object
 const metadata = {
@@ -56,6 +56,13 @@ createWeb3Modal({
 
 
 export default function Wallet() {
-    return <w3m-button />
-  }
+  return (
+    <div className="main">
+      <div className="inner">
+        <img src={mobileimg}/>
+        <w3m-button className="buttonme"/>
+      </div>
+    </div>
+  );
+}
 
