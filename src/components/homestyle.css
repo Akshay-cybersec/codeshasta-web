@@ -2,7 +2,9 @@
 :root {
     --main-color: #640AF4;
   }
-
+*{
+  overflow-x: hidden;
+}
   
 .navitemsingle.active .iteminnerstyle {
     
@@ -115,13 +117,17 @@
   }
 
   .analytics-container{
-    width:69%;
+    display: flex;
     padding-left: 12px;
-    height: 400px;
+    height: 1200px;
     position: absolute;
+    flex-direction: column;
+    justify-content: space-around;
   }
   
-  .analytics-card{
-    margin-top: 20px;
-  }
+.card{
+  margin-right: 15px;
+  padding-top: 12px;
+}
+
   

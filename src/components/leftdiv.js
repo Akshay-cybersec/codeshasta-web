@@ -52,7 +52,7 @@ function Leftdiv() {
                     onClick={() => handleItemClick("courses")}
                 >
                     <img className="innerimg" src={learning} />
-                    <span className="iteminnerstyle">Manage Courses</span>
+                    <span className="iteminnerstyle">List Data</span>
                 </Link>
                 <Link
                     style={{ textDecoration: 'none' }}
@@ -70,7 +70,7 @@ function Leftdiv() {
                     onClick={() => handleItemClick("add")}
                 >
                     <img className="innerimg" src={download} />
-                    <span className="iteminnerstyle">Add Courses</span>
+                    <span className="iteminnerstyle">Add Data</span>
                 </Link>
                 <Link
                     style={{ textDecoration: 'none' }}

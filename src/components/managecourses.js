@@ -1,67 +1,55 @@
 import React, { useState, useEffect } from "react";
 import "./homestyle.css";
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import courseimg from '../resources/course.png';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import { SearchBar } from '@cred/neopop-web/lib/components';
 import { colorGuide } from '@cred/neopop-web/lib/primitives';
 import { BsBell } from "react-icons/bs";
-import cryptoimg from "../resources/cryptocurrency-main.jpg"
-import blockchain from "../resources/blockchain.jpg"
-import django from "../resources/django.jpg"
-
-
-const CardContentWrapper = styled('div')({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start', // Adjusted alignment to left
-    textAlign: 'left', // Adjusted text alignment
-});
+import { Button } from "primereact/button";
 
 function Managecourses() {
-    const [courseData, setCourseData] = useState([]);
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
+        console.log("useEffect called");
         // Fetch data from local storage
         const savedData = JSON.parse(localStorage.getItem("courseFormData"));
         if (savedData) {
-            setCourseData([savedData]);
-        }
-
-        // Add an empty dependency array to ensure this effect runs only once
-    }, []);
-
-    // Add dummy data
-    useEffect(() => {
-        const dummyData = [
-            {
-                title: "Crypto Currency",
-                description: "Description for crypto",
-                amount: "₹10000",
-                img:cryptoimg
-            },
-            {
-                title: "Blockchain",
-                description: "Description for blockchain",
-                amount: "₹20000",
-                img:blockchain
-            },
-            {
-                title: "Django",
-                description: "Description for Django",
-                amount: "₹5000",
-                img:django
+            // Check if savedData already exists in products state
+            const exists = products.some(product => product.code === savedData.code);
+            if (!exists) {
+                // Merge data from local storage with sample data
+                setProducts(prevProducts => [
+                    ...prevProducts,
+                    savedData
+                ]);
             }
+        }
+        
+        // For demonstration purposes, I'm generating some sample data
+        const sampleData = [
+            { code: '101', name: 'Course A', category: 'Category A', quantity: 10, unit: 'Unit A', weight: 'Weight A', cost: '$10', precautions: 'Precaution A', origin: 'Origin A' },
+            { code: '102', name: 'Course B', category: 'Category B', quantity: 20, unit: 'Unit B', weight: 'Weight B', cost: '$20', precautions: 'Precaution B', origin: 'Origin B' },
+            { code: '103', name: 'Course C', category: 'Category C', quantity: 15, unit: 'Unit C', weight: 'Weight C', cost: '$15', precautions: 'Precaution C', origin: 'Origin C' }
         ];
-
-        // Merge dummy data with existing course data
-        setCourseData(prevData => [ ...dummyData,...prevData]);
+        // Check if sampleData already exists in products state
+        const newProducts = sampleData.filter(newProduct => !products.some(product => product.code === newProduct.code));
+        setProducts(prevProducts => [
+            ...prevProducts,
+            ...newProducts
+        ]);
     }, []);
+    
+
+    const columns = [
+        { field: 'code', header: 'Name' },
+        { field: 'name', header: 'Quantity' },
+        { field: 'category', header: 'Unit' },
+        { field: 'quantity', header: 'Weight' },
+        { field: 'cost', header: 'Cost' }, // Updated field for 'Cost' column
+        { field: 'precautions', header: 'Precautions' }, // Updated field for 'Precautions' column
+        { field: 'origin', header: 'Origin' }, // Updated field for 'Origin' column
+    ].filter(col => col.field && col.header); // Remove empty columns
 
     return (
         <div className="maindiv" style={{ display: 'flex', flexDirection: 'column', marginTop: 20 }}>
@@ -74,61 +62,17 @@ function Managecourses() {
                 />
                 <BsBell style={{ width: 24, height: 21, color: "black", paddingLeft: 12 }} />
             </div>
-            <h2 style={{paddingLeft:12}}>Manage Courses</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {courseData.map((data, index) => (
-                    <Card key={index} elevation={4} style={{ width: '350px', padding: '16px', margin: '16px' }}>
-                        {/* Image */}
-                        <img src={data.img?data.img:courseimg} alt="Product" style={{ width: '100%', height: 'auto' }} />
-
-                        <CardContent style={{ padding: '16px' }}>
-                            <CardContentWrapper>
-                                {/* Title */}
-                                <Typography variant="h6" gutterBottom>
-                                    {data.title}
-                                </Typography>
-                                {/* Description */}
-                                <Typography variant="body2" color="textSecondary" gutterBottom>
-                                    {data.description}
-                                </Typography>
-                                {/* Price */}
-                                <Typography variant="subtitle1" gutterBottom>
-                                    {data.amount}
-                                </Typography>
-                            </CardContentWrapper>
-                        </CardContent>
-
-                        <CardActions style={{ justifyContent: 'center' }}>
-                            {/* Buttons in a column */}
-                            <Box display="flex" flexDirection="column" width="100%">
-                                {/* Button 1 (Transparent) */}
-                                <Button
-                                    variant="contained"
-                                    size="small"
-                                    color="primary"
-                                    style={{
-                                        marginBottom: '8px',
-                                        width: '100%',
-                                        backgroundColor: 'rgba(100, 10, 244, 0.07)',
-                                        border: '1px solid rgba(100, 10, 244, 1)',
-                                        color: 'rgba(100, 10, 244, 1)'
-                                    }}
-                                >
-                                    Add Video to your course
-                                </Button>
-                                {/* Button 2 (Colored) */}
-                                <Button
-                                    variant="contained"
-                                    size="small"
-                                    color="primary"
-                                    style={{ width: '100%', backgroundColor: 'rgba(100, 10, 244, 1)' }}
-                                >
-                                    Manage Course
-                                </Button>
-                            </Box>
-                        </CardActions>
-                    </Card>
-                ))}
+            <h2 style={{ paddingLeft: 12 }}>Data</h2>
+            <div className="card">
+                <DataTable value={products} className="p-datatable-striped" style={{ border: '1px solid #ddd', borderRadius: '5px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', background: 'rgba(255, 255, 255, 0.7)' }}>
+                    {columns.map((col, i) => (
+                        <Column key={col.field} field={col.field} header={col.header} style={{ borderBottom: '1px solid #ddd', padding: '10px' }} />
+                    ))}
+                </DataTable>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+                <Button className="nextbtnstyle">Edit</Button>
+                <Button className="nextbtnstyle" style={{marginRight:20,marginLeft:20}}>Delete</Button>
             </div>
         </div>
     );

@@ -3,17 +3,15 @@ import { SearchBar } from '@cred/neopop-web/lib/components';
 import { colorGuide } from '@cred/neopop-web/lib/primitives';
 import { BsBell } from "react-icons/bs";
 import bgimg from "../resources/bg.jpeg"
-import Card from '@mui/joy/Card';
-import CardContent from '@mui/joy/CardContent';
-import CircularProgress from '@mui/joy/CircularProgress';
-import Typography from '@mui/joy/Typography';
-import SvgIcon from '@mui/joy/SvgIcon';
+import { LineChart } from '@mui/x-charts/LineChart';
 
+import { PieChart } from '@mui/x-charts/PieChart';
+import { BarChart } from '@mui/x-charts/BarChart';
 function Home() {
     const analyticsData = [
-        { title: "Total Views", value: "750K",valme:30 },
-        { title: "Total subscriber ", value: "960" ,valme:10},
-        { title: "Total revenue", value: "$ 350k" ,valme:50},
+        { title: "Total Views", value: "750K", valme: 30 },
+        { title: "Total subscriber ", value: "960", valme: 10 },
+        { title: "Total revenue", value: "$ 350k", valme: 50 },
     ];
     return (
         <div>
@@ -42,38 +40,45 @@ function Home() {
                 </div>
 
             </div>
-            <h2 style={{paddingLeft:12}}>Analytics</h2>
+            <h2 style={{ paddingLeft: 12, paddingBottom: 30 }}>Analytics</h2>
             <div className="analytics-container">
-                {analyticsData.map((data, index) => (
-                    <div key={index} className="analytics-card">
-                        <Card variant="soft" color="neutral" invertedColors>
-                            <CardContent orientation="horizontal">
-                                <CircularProgress size="lg" determinate value={data.valme}>
-                                    <SvgIcon>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth={1.5}
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
-                                            />
-                                        </svg>
-                                    </SvgIcon>
-                                </CircularProgress>
-                                <CardContent>
-                                    <Typography level="body-md">{data.title}</Typography>
-                                    <Typography level="h2">{data.value}</Typography>
-                                </CardContent>
-                            </CardContent>
-                        </Card>
-                    </div>
-                ))}
+
+                <PieChart
+                    className="graph"
+                    series={[
+                        {
+                            data: [
+                                { id: 0, value: 10, label: 'series A' },
+                                { id: 1, value: 15, label: 'series B' },
+                                { id: 2, value: 20, label: 'series C' },
+                            ],
+                        },
+                    ]}
+                    width={600}
+                    height={300}
+                />
+                <h2 style={{ paddingLeft: 12, paddingBottom: 30 }}>Analytics2</h2>
+                <BarChart
+                    className="graph"
+                    xAxis={[{ scaleType: 'band', data: ['group A', 'group B', 'group C'] }]}
+                    series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
+                    width={600}
+                    height={300}
+                />
+                <h2 style={{ paddingLeft: 12, paddingBottom: 30 }}>Analytics3</h2>
+                <LineChart
+                    className="graph"
+                    xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                    series={[
+                        {
+                            data: [2, 5.5, 2, 8.5, 1.5, 5],
+                        },
+                    ]}
+                    width={600}
+                    height={300}
+                />
             </div>
+
         </div>
     );
 }
